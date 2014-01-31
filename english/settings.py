@@ -1,5 +1,5 @@
 """
-Django settings for english project.
+Django settings for eng project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.6/topics/settings/
@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'xr_gdqhq=^9$0gg5q9x@c8e!as-(8zi7n1=1c%t57mkavebu)#'
+SECRET_KEY = 'edp49rmkqa4jh50@$860p+%k*@+n+%1rjkxq=or)+an9h^er!!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'engapp',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -46,6 +47,18 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.tz',
+    'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
+)
+
 
 ROOT_URLCONF = 'english.urls'
 
@@ -80,3 +93,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(os.path.dirname(__file__), 'templates/static'), 
+)
+
+TEMPLATE_DIRS = (
+    os.path.join(os.path.dirname(__file__), 'templates/'),
+)
+
