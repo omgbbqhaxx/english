@@ -19,7 +19,7 @@
 
 
 </head>
-<body>
+<body onload="connect()">
  
   <section id="content">
     <div class="main padder">
@@ -72,6 +72,23 @@
 	    <a href="http://ingilizce-kelime-ogren.com/"><span class="label label-success">Kolay kelimeler</span></a>,
             <a href="http://ingilizce-kelime-ogren.com/zor-kelimeler/"><span class="label label-success">Zor kelimeler</span></a>
 	    </h5>
+            
+            
+            <form method="POST" action="/send_message" target="_hidden">
+         <input name="message" id="input_message" style="width: 500px;border: 1px solid #CCC;padding: 3px;" value="" placeholder="Enter your message here and press the 'Send' button."/>
+            <input name="from_user" type="hidden" id="input_from_user"/>
+            <select name="to_user" id="select_to_user">
+                <option value="">To All</option>
+            </select>
+         <input type="submit" value="Post"/>
+        </form>
+        <iframe id="_hidden" style="display:none"></iframe>
+        <div id="msjs"></div>
+        <hr/>
+            
+            
+        
+            
 	    </div>
             <div style="position: absolute; height: 20px; top: 799px;width: 398px;">
                 {% if uid %}
@@ -108,6 +125,39 @@
   <script src="http://ingilizce-kelime-ogren.com/static/js/app.js"></script>
   <script src="http://ingilizce-kelime-ogren.com/static/js/app.plugin.js"></script>
   <script src="http://ingilizce-kelime-ogren.com/static/js/app.data.js"></script>
+          <script type="text/javascript" src="//cdn.sockjs.org/sockjs-0.3.min.js"></script>
+       <script>
+         function connect(){
+         function displayMessage(message){
+         $("#msjs").append(""+ message +"<br>");
+         }
+
+var sockJS = new SockJS("//ingilizce-kelime-ogren.com/sockjs"),
+                    userId = 0,
+                    users = {};
+
+sockJS.onopen = function() {
+displayMessage('Connected.');
+};
+
+sockJS.onmessage = function(event) {
+                    event.data = JSON.parse(event.data);
+                    var msg = event.data.msg,
+                        user = event.data.user,
+                        el;
+                   
+                    // Clear sender's message input
+                    el = document.getElementById('input_message');
+                    if(el && el.value && user == userId && el.value == event.data.msg){
+                        el.value = '';
+                    }
+displayMessage(msg);
+};
+sockJS.onclose = function() {
+displayMessage("Closed.");
+};
+         }
+        </script>
   
 </body>
 </html>
