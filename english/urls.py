@@ -7,8 +7,12 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'eng.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-    url(r'^wellcome/', views.wellcome),
+    url(r'^logout/', views.logout),
+    url(r'^success/', views.success),
+    url(r'^taker/', views.taker),
+    url(r'^$', views.wellcome),
     url(r'^channel/', views.ch),
+    url(r'^zor-kelimeler/', views.zor),
     url(r'^admin/', include(admin.site.urls)),
 )
 

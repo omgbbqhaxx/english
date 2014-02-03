@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>İngilizce öğren</title>
+  <meta name="description" content="mobile first, app, web app, responsive, admin dashboard, flat, flat ui">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> 
+  <link rel="stylesheet" href="http://ingilizce-kelime-ogren.com/static/css/bootstrap.css">
+  <link rel="stylesheet" href="http://ingilizce-kelime-ogren.com/static/css/font-awesome.min.css">
+  <link rel="stylesheet" href="http://ingilizce-kelime-ogren.com/static/css/font.css" cache="false">
+  <link rel="stylesheet" href="http://ingilizce-kelime-ogren.com/static/css/style.css">
+  <link rel="stylesheet" href="http://ingilizce-kelime-ogren.com/static/css/socialshare.css">
+  <link href='http://fonts.googleapis.com/css?family=Exo+2&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+  <!--[if lt IE 9]>
+    <script src="http://ingilizce-kelime-ogren.com/static/js/ie/respond.min.js" cache="false"></script>
+    <script src="http://ingilizce-kelime-ogren.com/static/js/ie/html5.js" cache="false"></script>
+  <![endif]-->
+
+
+</head>
+<body>
+ 
+  <section id="content">
+    <div class="main padder">
+      <div class="row" >
+        <div class="col-lg-4 col-lg-offset-4 m-t-large"  >
+          <section  ng-app="MyTutorialApp" style="width:400px; height: 850px; background-image:url('http://ingilizce-kelime-ogren.com/static/images/eng.png');" ng-controller="MainController" class="panel">
+            <header style="font-family: 'Exo 2', sans-serif;" class="panel-heading text-center">
+             Hoşgeldin.
+            </header>
+	    <!--Avatar -->
+	    <div style="position: relative; left: 13px; width: 371px; height: 100px; top: 112px;" id="head">
+	    {% if uid %}
+            <div style="position: relative;top:12px;left:14px;width: 75px;height: 75px; border-radius:37px;background-image:url('http://graph.facebook.com/{{ uid }}/picture?type=normal'); background-size:75px 75px;" ></div>
+	    {% else %}
+            <img style="position: relative;top:12px;left:14px;" src="http://ingilizce-kelime-ogren.com/static/images/avatar.png">
+            {% endif %}
+            {%if name%}
+            <h3 style="font-family: 'Exo 2', sans-serif;color: white;position:relative;left:110px;top:-84px;width:261px;height:28px;">{{ name }}</h3>
+	    {% else %}
+            <h3 style="font-family: 'Exo 2', sans-serif;color: white;position:relative;left:110px;top:-84px;width:261px;height:28px;">Ziyaretçi</h3>
+            {% endif %}
+            {% if uid %}
+            <h6 style="font-family: 'Exo 2',sans-serif; color: white; position: relative; left: 110px; top: -84px; width: 261px; height: 50px;" id="sharer">Hoşgeldin, yo.</h6>
+            {% else %}
+            <h6 style="font-family: 'Exo 2',sans-serif; color: white; position: relative; left: 110px; top: -84px; width: 261px; height: 50px;" id="sharer">İstatisliklerinizi kayıt etmek ve diğer kullanıcılarla tanışmak için aşağıdaki facebook ile giriş yap butonunu kullanın.</h6>
+            {% endif %}
+            <span class="label label-info" style="font-family: 'Exo 2',sans-serif;position: relative; top: -181px; left: 72px; font-size:15px;">{[{nmbr}]}</span>
+	    <span class="label label-info" style="font-family: 'Exo 2',sans-serif; position: relative; font-size: 15px; top: -121px; left: 27px;">{[{playcounter}]}</span>
+	    </div>
+	    <!--End of Avatar -->
+	    <div id="formcontrol" style="position: relative; left: 13px; width: 371px; height: 400px;top:110px;" >
+	    <div style="position: relative;width: 370px;">
+	    <div class="progress">
+	    <div class="progress-bar progress-bar-success" style="width: {[{dogri}]}%">
+	    <span >{[{dogri}]} </span>
+	    </div>
+	    <div class="progress-bar progress-bar-danger" style="width: {[{hatali}]}%">
+	    <span >{[{hatali}]} </span>
+	    </div>
+	   
+	    </div>
+
+	   
+            <h2 id="kelime" style="text-align: center;" ng-model="people">{[{people[Aralik].code}]}</h2>
+	    </div>
+	    <input id="texter" class="form-control" name="google" ng-model="google"  style="position: relative; height: 44px; width: 305px; left: 35px; top: 0px;" type="text" />
+	    <h3 style="text-align: center;" ><span class="label label-danger">{[{result}]}</span> </h3>
+	    <h6 style="text-align: center;" >Cevabı görmek için <span class="label label-info">qqq</span>, ipucu  için <span class="label label-info">www</span> yazın . </h6>
+	    <h5 style="text-align: center;margin: 5px;" >
+	    <a href="http://ingilizce-kelime-ogren.com/"><span class="label label-success">Kolay kelimeler</span></a>,
+            <a href="http://ingilizce-kelime-ogren.com/zor-kelimeler/"><span class="label label-success">Zor kelimeler</span></a>
+	    </h5>
+	    </div>
+            <div style="position: absolute; height: 20px; top: 799px;width: 398px;">
+                {% if uid %}
+                <a style="cursor:pointer" onclick='logoutNow();'><p style="text-align: center;color: white;"><i class="icon-facebook"></i>Çıkış yap.<p></a>
+                {% else %}
+                 <a style="cursor:pointer" onclick="Login()" ><p style="text-align: center;color: white;"><i class="icon-facebook"></i>acebook ile giriş yap.<p></a>
+                {% endif %}
+            </div>
+	   
+          </section>
+      </div>
+    </div>
+  </section>
+  <!-- footer -->
+  <footer id="footer">
+    <div class="text-center padder clearfix">
+      <p>
+        <small style="font-family: 'Exo 2', sans-serif;"> İngilizce kelime egzersiz'i yaparak ingilizceyi en hızlı şekilde öğrenin.</small><br><br>
+        <a href="https://twitter.com/ogreningilizce" class="btn btn-xs btn-circle btn-twitter"><i class="icon-twitter"></i></a>
+        <a href="https://www.facebook.com/ingilizce.kelime.egzersizi" class="btn btn-xs btn-circle btn-facebook"><i class="icon-facebook"></i></a>
+        <div id="message"></div>
+        
+      </p>
+    </div>
+  </footer>
+  <!-- / footer -->
+	<script src="http://ingilizce-kelime-ogren.com/static/js/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="http://ingilizce-kelime-ogren.com/static/js/bootstrap.js"></script>
+  <!-- app -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js" type="text/javascript"></script>
+  <script src="http://ingilizce-kelime-ogren.com/static/js/fb.js"></script>
+  <script src="http://ingilizce-kelime-ogren.com/static/js/zor.js" type="text/javascript"></script>
+  <script src="http://ingilizce-kelime-ogren.com/static/js/app.js"></script>
+  <script src="http://ingilizce-kelime-ogren.com/static/js/app.plugin.js"></script>
+  <script src="http://ingilizce-kelime-ogren.com/static/js/app.data.js"></script>
+  
+</body>
+</html>
+
+
+
+
+
+
+<!--
+<img src="http://hayageek.com/examples/oauth/facebook/oauth-javascript/LoginWithFacebook.png" style="cursor:pointer;" onclick="Login()"/>
+
+
+-->
+
+
+
+
