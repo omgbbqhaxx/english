@@ -816,7 +816,7 @@ app.controller("MainController", function($scope,$interval){
 		},        
                  {
 			id: 155,
-			code: 'istemek',
+			code: 'want',
 			decode : 'istemek'
 		},        
                  {
@@ -1302,7 +1302,17 @@ app.controller("MainController", function($scope,$interval){
 	if (cntr == 0) {
 		$interval.cancel(stop);
 		
+		
+		
 		 FB.api('/me', function(response) {
+			if (response.id == undefined) {
+				//kayıt olmamış pezevenkler için
+				var cvp = "ingilizce-kelime-ogren.com da "+dogrix+" kelime bildim ve "+hatalix+" yeni ingilizce kelime öğrendim."
+				 $("#sharer").html("Tebrikler arkadaşlarınızında skorlarını görebilmek için lütfen skorunuzu paylaşın.");
+				$("#texter").fadeOut(200);
+				$("#kelime").html('<h5>'+ cvp +'</h5>Skorunu paylaş<br><hr><a class="btnx btnx-tweet" href="https://twitter.com/intent/tweet?text='+ cvp +'&via=ogreningilizce">Twitter</a><a class="btnx btnx-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://ingilizce-kelime-ogren.com">Facebook</a><a class="btnx btnx-google" href="https://plus.google.com/share?url=http://ingilizce-kelime-ogren.com">Google+</a>');
+		  
+			}else { 
 	      $(document).ready(function(){
   // using jQuery
 function getCookie(name) {
@@ -1320,20 +1330,36 @@ break;
 }
 return cookieValue;
 }
+
 		$.ajax({
 		  type:'POST',
 		  url:'http://ingilizce-kelime-ogren.com/success/',
 		  data:{uid: response.id,isim : response.name,bildin : dogrix,ogrendin: hatalix},
 		  success:function(cevap){
+		
 		  $("#sharer").html("Tebrikler arkadaşlarınızında skorlarını görebilmek için lütfen skorunuzu paylaşın.");
 		  $("#texter").fadeOut(200);
-		  $("#kelime").html('<h5>'+ cevap +'</h5>Skorunu paylaş<br><hr><a class="btnx btnx-tweet" href="https://twitter.com/intent/tweet?text='+ cevap +'&via=ogreningilizce">Twitter</a><a class="btnx btnx-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://ingilizce-kelime-ogren.com">Facebook</a><a class="btnx btnx-google" href="https://plus.google.com/share?url=http://ingilizce-kelime-ogren.com">Google+</a>');
+		  $("#kelime").html('<h5>'+ cevap +'</h5>Skorunu paylaş<br><a class="btnx btnx-tweet" href="https://twitter.com/intent/tweet?text='+ cevap +'&via=ogreningilizce">Twitter</a><a class="btnx btnx-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://ingilizce-kelime-ogren.com">Facebook</a><a class="btnx btnx-google" href="https://plus.google.com/share?url=http://ingilizce-kelime-ogren.com">Google+</a>');
+		  $("#msjs").fadeOut(200);
+		  $("#cvbi").fadeOut(200);
+		  $("#rslt").fadeOut(200);
+		  //başarılı olduğunda bir ajax isteği daha yaratır .
+		  $.ajax({
+		  type:'POST',
+		  url:'http://ingilizce-kelime-ogren.com/send_message',
+		  data:{dogru : dogrix, hatali : hatalix,user: response.name,link : response.link, img : response.id},
+		  success:function(cevap){
+		 // $("#msjs").append('');
 		  },
-		  });
-		
-		  });
-	  	  	    
-    });
+		  });//ajax isteği bitiş
+		  
+		  
+		  }, //1. success fonk bitişi 
+		  });//ajax isteği bitiş
+		  }); //document ready bitiş.
+	      
+	 } 	  	    
+    }); //FBapiME bitişi.
 		
 	}else {
         var x = $scope.people[$scope.Aralik];

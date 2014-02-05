@@ -6,6 +6,7 @@ class accounts(models.Model):
         uid = models.IntegerField()
         pro    = models.TextField()
         badge = models.TextField()
+        playtimes = models.IntegerField()
         others  = models.TextField()
         def __unicode__(self):
                 return u'%s' % (self.uid)
@@ -15,7 +16,6 @@ class accounts(models.Model):
 class timeline(models.Model):
     persona = models.ForeignKey(accounts)
     scores=models.TextField()
-    created = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
         return u'%s %s' % (self.persona, self.scores)

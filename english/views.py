@@ -20,7 +20,6 @@ def wellcome(request):
   if loggedin == None:
     return render_to_response('cookieok.html')
   else:
-    print loggedin
     mad = json.loads(loggedin)
     uid = mad['uid']
     name = mad['name']
@@ -40,7 +39,7 @@ def taker(request):
     try:
       acc=accounts.objects.get(uid=uid)
     except accounts.DoesNotExist:
-      registeracc=accounts(uid=uid,pro="no",badge="no",others=google)
+      registeracc=accounts(uid=uid,pro="no",badge="no",playtimes=0,others=google)
       registeracc.save()
       r.setex(uniqueid, 3600, others)
       return HttpResponse(u'uid : %s'% uid)
@@ -68,14 +67,16 @@ def success(request):
     registertimeline.save()
     return HttpResponse(u'%s ingilizce-kelime-ogren.com da %s kelime bildi ve %s yeni ingilizce kelime ogrendi.'% (isim,bildin,ogrendin))
   ajj=accounts.objects.get(uid=uid)
+  ajj.playtimes +=1
   tl = timeline.objects.get(persona=ajj)
   scores = tl.scores
   scorelist = json.loads(scores)
   scorelist.insert(0, [bildin, ogrendin])
-  scx = scorelist[0:3]
+  scx = scorelist[0:20]
   dumpscorelist = json.dumps(scx)
   tl.scores = dumpscorelist
   tl.save()
+  ajj.save()
   return HttpResponse(u'%s ingilizce-kelime-ogren.com da %s kelime bildi ve %s yeni ingilizce kelime ogrendi.'% (isim,bildin,ogrendin))
 
 
@@ -88,6 +89,33 @@ def logout(request):
   else:
     r.delete(uniqueid)
     return render_to_response('cookieok.html', locals())
+  
+  
+def getuser(request, username):
+  if request.method=='GET':
+    try:
+      ajj=accounts.objects.get(uid=int(username))
+    except accounts.DoesNotExist:
+      return HttpResponse(u'Böyle bir hesap yok')
+    dogrular = []
+    yanlislar = []
+    uid = ajj.uid
+    others = ajj.others
+    istatislikler = timeline.objects.get(persona=ajj)
+    statzz = istatislikler.scores
+    loadstats = json.loads(statzz)
+    for i in loadstats:
+      dogrular.append(i[0])
+      yanlislar.append(i[1])
+    dr = dogrular[::-1]
+    yr = yanlislar[::-1]
+    dogri = map(int, dr)
+    hatali = map(int, yr)
+    xothers = json.loads(others)
+    name = xothers["name"]
+    return render_to_response('users.html', locals())
+    
+  
     
 
 

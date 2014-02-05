@@ -69,7 +69,10 @@ return cookieValue;
 		  url:'http://ingilizce-kelime-ogren.com/logout/',
 		  data:{},
 		  success:function(cevap){
+		    FB.logout(function(){
 		  location.reload();
+		    });
+		    location.reload();
 		  },
 		  });
 		

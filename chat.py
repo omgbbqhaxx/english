@@ -29,45 +29,37 @@ subscriber = tornadoredis.pubsub.SockJSSubscriber(tornadoredis.Client())
 
 
 class SendMessageHandler(tornado.web.RequestHandler):
-
-    def _send_message(self, channel, msg_type, msg, user=None):
+    
+    def _send_message(self, channel, msg_type, dogru, hatali, link, img, user=None):
+	
         msg = {'type': msg_type,
-               'msg': msg,
+	       'link': link,
+	       'img' : img,
+               'dogru': dogru,
+	       'hatali': hatali,
                'user': user}
         msg = json.dumps(msg)
+	
         redis_client.publish(channel, msg)
 
     def post(self):
-        message = self.get_argument('message')
-        from_user = self.get_argument('from_user')
-        to_user = self.get_argument('to_user')
-        if to_user:
-            self._send_message('private.{}'.format(to_user),
-                               'pvt', message, from_user)
-            self._send_message('private.{}'.format(from_user),
-                               'tvp', message, to_user)
-        else:
-            self._send_message('broadcast_channel', 'msg', message, from_user)
-        self.set_header('Content-Type', 'text/plain')
-        self.write('sent: %s' % (message,))
+        self.user = self.get_argument('user')
+        self.dogru = self.get_argument('dogru')
+	self.hatali = self.get_argument('hatali')
+	self.link = self.get_argument('link')
+	self.img = self.get_argument('img')
+        self._send_message('broadcast_channel', 'msg', self.dogru, self.hatali, self.link, self.img, self.user)
+       
 
 
 class MessageHandler(sockjs.tornado.SockJSConnection):
 
-    def _send_message(self, msg_type, msg, user=None):
-        if not user:
-            user = self.user_id
-        self.send(json.dumps({'type': msg_type,
-                              'msg': msg,
-                              'user': user}))
+  
 
     def on_open(self, request):
         # Generate a user ID and name to demonstrate 'private' channels
         self.user_id = str(uuid.uuid4())[:5]
-        self.user_name = "omgbbqhax"
-        # Send it to user
-        self._send_message('uid', self.user_name, self.user_id)
-        # Subscribe to broadcast and 'private' message channels
+      
         subscriber.subscribe(['broadcast_channel',
                               'private.{}'.format(self.user_id)],
                              self)

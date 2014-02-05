@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>İngilizce öğren</title>
-  <meta name="description" content="mobile first, app, web app, responsive, admin dashboard, flat, flat ui">
+  <title>İngilizce kelime öğren-kelime ve cümle egzersiz uygulaması</title>
+  <meta name="description" content="ingilizce kelime öğren,ingilizce ezber, ingilizce cümle ezberle,ingilizce egzersizi">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> 
   <link rel="stylesheet" href="http://ingilizce-kelime-ogren.com/static/css/bootstrap.css">
   <link rel="stylesheet" href="http://ingilizce-kelime-ogren.com/static/css/font-awesome.min.css">
@@ -11,7 +11,16 @@
   <link rel="stylesheet" href="http://ingilizce-kelime-ogren.com/static/css/style.css">
   <link rel="stylesheet" href="http://ingilizce-kelime-ogren.com/static/css/socialshare.css">
   <link href='http://fonts.googleapis.com/css?family=Exo+2&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
+  ga('create', 'UA-47792367-1', 'ingilice-kelime-ogren.com');
+  ga('send', 'pageview');
+
+</script>
   <!--[if lt IE 9]>
     <script src="http://ingilizce-kelime-ogren.com/static/js/ie/respond.min.js" cache="false"></script>
     <script src="http://ingilizce-kelime-ogren.com/static/js/ie/html5.js" cache="false"></script>
@@ -19,7 +28,7 @@
 
 
 </head>
-<body>
+<body onload="connect()">
  
   <section id="content">
     <div class="main padder">
@@ -27,7 +36,7 @@
         <div class="col-lg-4 col-lg-offset-4 m-t-large"  >
           <section  ng-app="MyTutorialApp" style="width:400px; height: 850px; background-image:url('http://ingilizce-kelime-ogren.com/static/images/eng.png');" ng-controller="MainController" class="panel">
             <header style="font-family: 'Exo 2', sans-serif;" class="panel-heading text-center">
-             Hoşgeldin.
+             <a href="http://ingilizce-kelime-ogren.com">ingilizce kelime öğren</a>
             </header>
 	    <!--Avatar -->
 	    <div style="position: relative; left: 13px; width: 371px; height: 100px; top: 112px;" id="head">
@@ -66,12 +75,16 @@
             <h2 id="kelime" style="text-align: center;" ng-model="people">{[{people[Aralik].code}]}</h2>
 	    </div>
 	    <input id="texter" class="form-control" name="google" ng-model="google"  style="position: relative; height: 44px; width: 305px; left: 35px; top: 0px;" type="text" />
-	    <h3 style="text-align: center;" ><span class="label label-danger">{[{result}]}</span> </h3>
-	    <h6 style="text-align: center;" >Cevabı görmek için <span class="label label-info">qqq</span>, ipucu  için <span class="label label-info">www</span> yazın . </h6>
+	    <h3 id="rslt" style="text-align: center;" ><span class="label label-danger">{[{result}]}</span> </h3>
+	    <h6 id="cvbi" style="text-align: center;" >Cevabı görmek için <span class="label label-info">qqq</span>, ipucu  için <span class="label label-info">www</span> yazın . </h6>
 	    <h5 style="text-align: center;margin: 5px;" >
 	    <a href="http://ingilizce-kelime-ogren.com/"><span class="label label-success">Kolay kelimeler</span></a>,
             <a href="http://ingilizce-kelime-ogren.com/zor-kelimeler/"><span class="label label-success">Zor kelimeler</span></a>
 	    </h5>
+            <hr/>
+            <div style="position: relative;top:10px;" id="msjs"></div>
+            
+        
 	    </div>
             <div style="position: absolute; height: 20px; top: 799px;width: 398px;">
                 {% if uid %}
@@ -90,8 +103,8 @@
     <div class="text-center padder clearfix">
       <p>
         <small style="font-family: 'Exo 2', sans-serif;"> İngilizce kelime egzersiz'i yaparak ingilizceyi en hızlı şekilde öğrenin.</small><br><br>
-        <a href="https://twitter.com/ogreningilizce" class="btn btn-xs btn-circle btn-twitter"><i class="icon-twitter"></i></a>
-        <a href="https://www.facebook.com/ingilizce.kelime.egzersizi" class="btn btn-xs btn-circle btn-facebook"><i class="icon-facebook"></i></a>
+        <a target="_blank" href="https://twitter.com/ogreningilizce" class="btn btn-xs btn-circle btn-twitter"><i class="icon-twitter"></i></a>
+        <a target="_blank" href="https://www.facebook.com/ingilizce.kelime.egzersizi" class="btn btn-xs btn-circle btn-facebook"><i class="icon-facebook"></i></a>
         <div id="message"></div>
         
       </p>
@@ -108,20 +121,14 @@
   <script src="http://ingilizce-kelime-ogren.com/static/js/app.js"></script>
   <script src="http://ingilizce-kelime-ogren.com/static/js/app.plugin.js"></script>
   <script src="http://ingilizce-kelime-ogren.com/static/js/app.data.js"></script>
+  <script type="text/javascript" src="//cdn.sockjs.org/sockjs-0.3.min.js"></script>
+  <script src="http://ingilizce-kelime-ogren.com/static/js/realtime.js"></script>  
   
 </body>
 </html>
 
 
 
-
-
-
-<!--
-<img src="http://hayageek.com/examples/oauth/facebook/oauth-javascript/LoginWithFacebook.png" style="cursor:pointer;" onclick="Login()"/>
-
-
--->
 
 
 
