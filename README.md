@@ -10,9 +10,10 @@ pip instal django
 
 $ sudo apt-get install redis-server
 
-
 $ redis-server --version
 
 $ sudo service redis-server restart
 
 $ pip install tornado-redis
+
+https://github.com/mrjoes/sockjs-tornado?source=c
