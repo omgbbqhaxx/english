@@ -6,7 +6,9 @@ ingilizce egzersiz yapın, diğer egzersiz yapanlarla tanışın , yeni  ingiliz
 
 virtualenv venv
 
-pip instal django
+$pip instal django
+
+$pip install tornado 
 
 $ sudo apt-get install redis-server
 
