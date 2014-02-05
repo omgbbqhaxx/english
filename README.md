@@ -14,6 +14,8 @@ $ redis-server --version
 
 $ sudo service redis-server restart
 
+$ pip install redis
+
 $ pip install tornado-redis
 
 https://github.com/mrjoes/sockjs-tornado?source=c
