@@ -15,10 +15,10 @@ def ch(request):
   return render_to_response('channel.html', locals())
 
 
-def wellcome(request):
+def wellcome(request, username="ana sayfa"):
   loggedin = r.get(uniqueid)
   if loggedin == None:
-    return render_to_response('cookieok.html')
+    return render_to_response('cookieok.html', locals())
   else:
     mad = json.loads(loggedin)
     uid = mad['uid']

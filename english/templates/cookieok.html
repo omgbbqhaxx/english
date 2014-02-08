@@ -79,7 +79,7 @@
 	    <h6 id="cvbi" style="text-align: center;" >Cevabı görmek için <span class="label label-info">qqq</span>, ipucu  için <span class="label label-info">www</span> yazın . </h6>
 	    <h5 style="text-align: center;margin: 5px;" >
 	    <a href="http://ingilizce-kelime-ogren.com/"><span class="label label-success">Kolay kelimeler</span></a>,
-            <a href="http://ingilizce-kelime-ogren.com/zor-kelimeler/"><span class="label label-success">Zor kelimeler</span></a>
+            <a href="http://ingilizce-kelime-ogren.com/zor_kelimeler/"><span class="label label-success">Zor kelimeler</span></a>
 	    </h5>
             <hr/>
             <div style="position: relative;top:10px;" id="msjs"></div>
@@ -126,7 +126,12 @@
   <!-- app -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js" type="text/javascript"></script>
   <script src="http://ingilizce-kelime-ogren.com/static/js/fb.js"></script>
+  {% ifequal username "ana sayfa" %}
   <script src="http://ingilizce-kelime-ogren.com/static/js/main.js" type="text/javascript"></script>
+   {% endifequal %}
+   {% ifequal username "zor_kelimeler"%}
+  <script src="http://ingilizce-kelime-ogren.com/static/js/zor.js" type="text/javascript"></script>
+    {% endifequal %}
   <script src="http://ingilizce-kelime-ogren.com/static/js/app.js"></script>
   <script src="http://ingilizce-kelime-ogren.com/static/js/app.plugin.js"></script>
   <script src="http://ingilizce-kelime-ogren.com/static/js/app.data.js"></script>

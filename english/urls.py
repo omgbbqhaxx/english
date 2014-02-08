@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^channel/', views.ch),
     url(r'^zor-kelimeler/', views.zor),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^(?P<username>\d+)/$', views.getuser),
+    url(r'^(?P<username>\w+)/$', views.wellcome),
+    url(r'^user/(?P<username>\d+)/$', views.getuser),
 )
 
