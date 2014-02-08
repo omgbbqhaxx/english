@@ -41,7 +41,7 @@ def taker(request):
     except accounts.DoesNotExist:
       registeracc=accounts(uid=uid,pro="no",badge="no",playtimes=0,others=google)
       registeracc.save()
-      r.setex(uniqueid, 3600, others)
+      r.setex(uniqueid, 3600, google)
       return HttpResponse(u'uid : %s'% uid)
     r.setex(uniqueid, 3600, google)
     return HttpResponse(u'uid2 : %s'% uid)
