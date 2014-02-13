@@ -27,20 +27,8 @@ redis_client = redis.Redis()
 subscriber = tornadoredis.pubsub.SockJSSubscriber(tornadoredis.Client())
 
 
-
 class SendMessageHandler(tornado.web.RequestHandler):
     
-    def _send_message(self, channel, msg_type, dogru, hatali, link, img, user=None):
-	
-        msg = {'type': msg_type,
-	       'link': link,
-	       'img' : img,
-               'dogru': dogru,
-	       'hatali': hatali,
-               'user': user}
-        msg = json.dumps(msg)
-	
-        redis_client.publish(channel, msg)
 
     def post(self):
         self.user = self.get_argument('user')
@@ -48,13 +36,28 @@ class SendMessageHandler(tornado.web.RequestHandler):
 	self.hatali = self.get_argument('hatali')
 	self.link = self.get_argument('link')
 	self.img = self.get_argument('img')
-        self._send_message('broadcast_channel', 'msg', self.dogru, self.hatali, self.link, self.img, self.user)
-       
+
+	xnxy = r.get("onloadx")
+	if xnxy == None:
+	    ary = [[self.img,self.link,self.user,self.dogru,self.hatali]]
+	    dary = json.dumps(ary)
+	    r.set("onloadx", dary)
+	    redis_client.publish("broadcast_channel", dary)
+	    print dary
+	else:
+	    lary = json.loads(xnxy)
+	    ary = [self.img,self.link,self.user,self.dogru,self.hatali]
+	    lary.insert(0, ary)
+	    maxtree = lary[0:3]
+	    dary = json.dumps(maxtree)
+	    r.set("onloadx", dary)
+	    redis_client.publish("broadcast_channel", dary)
+	    print dary
+	    print "aksi"
+
 
 
 class MessageHandler(sockjs.tornado.SockJSConnection):
-
-  
 
     def on_open(self, request):
         # Generate a user ID and name to demonstrate 'private' channels
@@ -63,6 +66,10 @@ class MessageHandler(sockjs.tornado.SockJSConnection):
         subscriber.subscribe(['broadcast_channel',
                               'private.{}'.format(self.user_id)],
                              self)
+	xnxy = r.get("onloadx")
+	if not xnxy == None:
+	    print xnxy
+	    self.send(xnxy)
     
 
     def on_close(self):
