@@ -5,6 +5,7 @@ from django import template
 import json, time , redis , uuid
 from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_exempt
+skt = time.strftime('%a, %d-%b-%Y %H:%M:%S GMT', time.localtime(time.time() + 365*24*60*60))
 r = redis.StrictRedis(host='localhost', port=6379, db=0)
 uniqueid = uuid.uuid4()
 
@@ -16,10 +17,11 @@ def ch(request):
 
 
 def wellcome(request, username="ana sayfa"):
-  loggedin = r.get(uniqueid)
-  if loggedin == None:
+ 
+  if not 'lgn' in request.COOKIES:
     return render_to_response('cookieok.html', locals())
   else:
+    loggedin = request.COOKIES.get('lgn')
     mad = json.loads(loggedin)
     uid = mad['uid']
     name = mad['name']
@@ -41,13 +43,14 @@ def taker(request):
     except accounts.DoesNotExist:
       registeracc=accounts(uid=uid,pro="no",badge="no",playtimes=0,others=google)
       registeracc.save()
-      r.setex(uniqueid, 3600, google)
-      return HttpResponse(u'uid : %s'% uid)
-    r.setex(uniqueid, 3600, google)
-    return HttpResponse(u'uid2 : %s'% uid)
+      rsp = HttpResponse(u'ok')
+      rsp.set_cookie('lgn', google, expires=skt)
+      return rsp
+    rsp = HttpResponse(u'ok')
+    rsp.set_cookie('lgn', google, expires=skt)
+    return rsp
   else:
     return HttpResponse(u'Error')
-    
 
 @csrf_exempt
 def success(request):
@@ -84,12 +87,13 @@ def success(request):
 @csrf_exempt
 def logout(request):
   if request.method == 'POST':
-    r.delete(uniqueid)
-    return HttpResponse(u'logout successfull')
+    rsp = HttpResponse(u'logout successfull')
+    rsp.delete_cookie('lgn')
+    return rsp
   else:
-    r.delete(uniqueid)
-    return render_to_response('cookieok.html', locals())
-  
+    rsp= render_to_response('cookieok.html', locals())
+    rsp.delete_cookie('lgn')
+    return rsp
   
 def getuser(request, username):
   if request.method=='GET':
