@@ -20,4 +20,6 @@ $ pip install redis
 
 $ pip install tornado-redis
 
+$ git clone https://github.com/mrjoes/sockjs-tornado.git
+
 https://github.com/mrjoes/sockjs-tornado?source=c
